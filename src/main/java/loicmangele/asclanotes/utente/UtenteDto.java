@@ -8,8 +8,8 @@ public record UtenteDto (
         @NotNull(message = "lo username è obbligatorio!")
         @Size( min=3, max=15, message = "il numero di caratteri dello username dev'essere tra i 3 e i 15 caratteri ")
         @Pattern(
-                regexp = "\\+?\\d{7,15}",
-                message = "lo username deve caratteri validi")
+                regexp = "^[A-Za-z0-9_]+$",
+                message = "lo username deve contenere caratteri validi")
         String username,
 
         @NotNull(message = "l'email è obbligatoria!")
@@ -29,6 +29,9 @@ public record UtenteDto (
 
         @NotNull(message = "il nome completo è obbligatorio!")
         @Size( min=5, message = "il numero di caratteri dell'username dev'essere di minimo 5 caratteri ")
+        @Pattern(
+                regexp = "^[a-zA-Zà-úÀ-Ú\\s]+$",
+                message = "Il nome completo può contenere solo lettere e spazi.")
         String fullname
         ) {
 

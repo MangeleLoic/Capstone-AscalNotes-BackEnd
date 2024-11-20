@@ -16,7 +16,7 @@ public class Corso {
     private Long id;
     @Column( nullable = false)
     private String nome;
-    @Column( nullable = false)
+    @Column( nullable = false, unique = true)
     private String codice;
     @Column
     private String descrizione;
