@@ -32,7 +32,7 @@ public record UtenteDto (
         @Pattern(
                 regexp = "^[a-zA-Zà-úÀ-Ú\\s]+$",
                 message = "Il nome completo può contenere solo lettere e spazi.")
-        String fullname
-        ) {
+        String fullname,
+        String profileImage) {
 
 }
