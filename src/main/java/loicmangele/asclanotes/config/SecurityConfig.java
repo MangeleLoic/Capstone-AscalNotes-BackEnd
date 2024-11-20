@@ -18,7 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    /*@Autowired
+   /* @Bean
+    @Autowired
     private FilterChainExceptionHandler filterChainExceptionHandler;
 
     @Bean
@@ -32,9 +33,9 @@ public class SecurityConfig {
         httpSecurity.cors(Customizer.withDefaults());
         httpSecurity.addFilterBefore(filterChainExceptionHandler, LogoutFilter.class);
         return httpSecurity.build();
-    }*/
+    }
 
-    @Bean
+    @Bean*/
     public PasswordEncoder getBcrypt() {
         return new BCryptPasswordEncoder(12);
     }
