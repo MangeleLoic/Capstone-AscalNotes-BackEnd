@@ -44,7 +44,7 @@ public class UtenteService {
         return utenteRepository.findAll(pageable);
     }
 
-    Optional<Utente> findById(Long id){
+    public Optional<Utente> findById(Long id){
         return this.utenteRepository.findById(id);
     }
 

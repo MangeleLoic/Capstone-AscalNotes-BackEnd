@@ -44,7 +44,7 @@ public class AppuntoService {
         return appuntoRepository.findAll(pageable);
     }
 
-    Optional<Appunto> findById(Long id){
+    public Optional<Appunto> findById(Long id){
         return this.appuntoRepository.findById(id);
     }
 

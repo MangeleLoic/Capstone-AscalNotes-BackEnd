@@ -1,17 +1,12 @@
 package loicmangele.asclanotes.allegato;
 
 
-import loicmangele.asclanotes.appunto.Appunto;
 import loicmangele.asclanotes.appunto.AppuntoRepository;
 import loicmangele.asclanotes.exceptions.AllegatoNotFoundByPathException;
 import loicmangele.asclanotes.exceptions.AllegatoNotFoundException;
 import loicmangele.asclanotes.exceptions.AppuntoNotFoundException;
 import loicmangele.asclanotes.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,17 +30,18 @@ public class AllegatoService {
     }
 
     public List<Allegato> findAllAllegati(Long appuntoId) {
-        return this.allegatoRepository.findAll();
+        return allegatoRepository.findByAppuntoId(appuntoId);
     }
 
 
+
     public Allegato findById(long id){
-        return this.allegatoRepository.findById(id).orElseThrow(()->new AppuntoNotFoundException(id));
+        return this.allegatoRepository.findById(id).orElseThrow(()->new AllegatoNotFoundException(id));
     }
     public void findByIdAndDelete(long id) {
         Allegato allegato = allegatoRepository.findById(id)
                 .orElseThrow(() -> new AllegatoNotFoundException(id));
-        allegatoRepository.delete(allegato);
+        allegatoRepository.delete(allegato);//RIVEDERE UNA VOLTA IMPLEMENTATO CLOUDINARY!!!
     }
 
     public Allegato findByPath(String path) {

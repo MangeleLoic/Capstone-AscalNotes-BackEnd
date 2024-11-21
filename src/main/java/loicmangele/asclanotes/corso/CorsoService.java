@@ -1,7 +1,6 @@
 package loicmangele.asclanotes.corso;
 
 import loicmangele.asclanotes.exceptions.*;
-import loicmangele.asclanotes.utente.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +39,7 @@ public class CorsoService {
         return corsoRepository.findAll(pageable);
     }
 
-    Optional<Corso> findById(Long id){
+    public Optional<Corso> findById(Long id){
         return this.corsoRepository.findById(id);
     }
 
