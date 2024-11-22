@@ -18,9 +18,9 @@ import org.springframework.web.cors.CorsConfiguration;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-   /* @Bean
-    @Autowired
-    private FilterChainExceptionHandler filterChainExceptionHandler;
+   // @Bean
+   // @Autowired
+   // private FilterChainExceptionHandler filterChainExceptionHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -30,12 +30,12 @@ public class SecurityConfig {
                 httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry.requestMatchers("/**").permitAll());
-        httpSecurity.cors(Customizer.withDefaults());
-        httpSecurity.addFilterBefore(filterChainExceptionHandler, LogoutFilter.class);
+       /* httpSecurity.cors(Customizer.withDefaults());
+        httpSecurity.addFilterBefore(filterChainExceptionHandler, LogoutFilter.class);*/
         return httpSecurity.build();
     }
 
-    @Bean*/
+    @Bean
     public PasswordEncoder getBcrypt() {
         return new BCryptPasswordEncoder(12);
     }

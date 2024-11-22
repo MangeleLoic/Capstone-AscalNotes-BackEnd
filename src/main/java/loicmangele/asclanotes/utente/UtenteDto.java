@@ -20,14 +20,16 @@ public record UtenteDto (
         message = "L'email deve contenere '@' e '.' in formato valido (esempio: esempio@dominio.com)")
          String email,
 
-        @NotNull(message = "la password è obbligatoria!")
-        @Size( min=8, message = "la password deve avere almeno 8 caratteri!! ")
+        @NotNull(message = "La password è obbligatoria!")
+        @Size(min = 8, message = "La password deve avere almeno 8 caratteri!")
         @Pattern(
-        regexp = "^(?=.[A-Z])(?=.[a-z])(?=.\\d)(?=.[@$!%?&])[A-Za-z\\d@$!%?&]{8,}$",
-        message = "La password deve contenere almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale")
+                regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+                message = "La password deve contenere almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale"
+        )
         String password,
 
-        @NotNull(message = "il nome completo è obbligatorio!")
+
+                @NotNull(message = "il nome completo è obbligatorio!")
         @Size( min=5, message = "il numero di caratteri dell'username dev'essere di minimo 5 caratteri ")
         @Pattern(
                 regexp = "^[a-zA-Zà-úÀ-Ú\\s]+$",
