@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +19,9 @@ import java.util.Optional;
 public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
+
+    @Autowired
+    private PasswordEncoder bcrypt;
 
     public Utente saveUtente(UtenteDto body){
         this.utenteRepository.findByUsername(body.username()).ifPresent(existingUtente -> {
@@ -31,9 +36,13 @@ public class UtenteService {
         Utente utente = new Utente();
         utente.setUsername(body.username());
         utente.setEmail(body.email());
-       // utente.setPassword(bcrypt.encode(body.password()));
+        utente.setPassword(bcrypt.encode(body.password()));
         utente.setFullname(body.fullname());
         utente.setProfileImage(body.profileImage());
+
+        if (utente.getRole() == null) {
+            utente.setRole(Role.STUDENT);
+        }
 
         return this.utenteRepository.save(utente);
     }
@@ -49,14 +58,25 @@ public class UtenteService {
     }
 
     public Utente updateUtente(long id, UtenteDto body) {
-        return utenteRepository.findById(id).map(utente -> {
-            utente.setUsername(body.username());
-            utente.setEmail(body.email());
-            utente.setPassword(body.password());
-            utente.setFullname(body.fullname());
-            utente.setProfileImage(body.profileImage());
-            return utenteRepository.save(utente);
-        }).orElseThrow(() -> new UtenteNotFoundException(id));
+        Utente found = this.utenteRepository.findById(id).orElse(null);
+
+
+        if (!found.getEmail().equals(body.email())) {
+            this.utenteRepository.findByUsername(body.username()).ifPresent(
+                    utente -> {
+                        throw new BadRequestException("Username " + body.username() + " già in uso!");
+                    }
+            );
+        }
+
+
+        found.setFullname(body.fullname());
+        found.setUsername(body.username());
+        found.setEmail(body.email());
+        found.setPassword(body.password());
+        found.setProfileImage(body.profileImage());
+
+        return this.utenteRepository.save(found);
     }
 
     public void findByIdAndDelete(long id) {

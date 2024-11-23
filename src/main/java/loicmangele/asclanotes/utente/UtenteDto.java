@@ -14,10 +14,6 @@ public record UtenteDto (
 
         @NotNull(message = "l'email è obbligatoria!")
         @Email(message = "l'email inserita non è valida!!")
-        @NotBlank(message = "L'email non può essere vuota")
-        @Pattern(
-        regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-        message = "L'email deve contenere '@' e '.' in formato valido (esempio: esempio@dominio.com)")
          String email,
 
         @NotNull(message = "La password è obbligatoria!")
