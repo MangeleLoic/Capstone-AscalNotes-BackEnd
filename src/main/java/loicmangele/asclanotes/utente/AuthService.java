@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.utente;
+/*package loicmangele.asclanotes.utente;
 
 import loicmangele.asclanotes.exceptions.UnauthorizedException;
 import loicmangele.asclanotes.tools.JWT;
@@ -30,4 +30,4 @@ public class AuthService {
             throw new UnauthorizedException("Credenziali errate!");
         }
     }
-}
+}*/

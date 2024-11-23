@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.tools;
+/*package loicmangele.asclanotes.tools;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -51,4 +51,4 @@ public class JWTChecker extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-}
+}*/

@@ -20,8 +20,8 @@ public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    @Autowired
-    private PasswordEncoder bcrypt;
+   /* @Autowired
+    private PasswordEncoder bcrypt;*/
 
     public Utente saveUtente(UtenteDto body){
         this.utenteRepository.findByUsername(body.username()).ifPresent(existingUtente -> {
@@ -36,7 +36,7 @@ public class UtenteService {
         Utente utente = new Utente();
         utente.setUsername(body.username());
         utente.setEmail(body.email());
-        utente.setPassword(bcrypt.encode(body.password()));
+        //utente.setPassword(bcrypt.encode(body.password()));
         utente.setFullname(body.fullname());
         utente.setProfileImage(body.profileImage());
 

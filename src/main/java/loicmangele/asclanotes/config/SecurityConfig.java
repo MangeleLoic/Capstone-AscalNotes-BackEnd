@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.config;
+/*package loicmangele.asclanotes.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -59,3 +59,4 @@ public class SecurityConfig {
         return source;
     }
 }
+*/

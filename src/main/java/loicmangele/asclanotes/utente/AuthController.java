@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.utente;
+/*package loicmangele.asclanotes.utente;
 
 import loicmangele.asclanotes.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +40,4 @@ public class AuthController {
     }
 
 
-}
+}*/

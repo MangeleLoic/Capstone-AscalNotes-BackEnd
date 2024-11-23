@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.tools;
+/*package loicmangele.asclanotes.tools;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -38,4 +38,4 @@ public class JWT {
                 .build().parseSignedClaims(accessToken).getPayload().getSubject();
     }
 
-}
+}*/

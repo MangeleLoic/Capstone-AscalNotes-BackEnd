@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.exceptions;
+/*package loicmangele.asclanotes.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -97,5 +97,5 @@ public class ExceptionsHandler {
         ex.printStackTrace();
         return new ErrorsResponseDTO("Problema lato server! Giuro che risolveremo presto!", LocalDateTime.now());
     }
-}
+}*/
 

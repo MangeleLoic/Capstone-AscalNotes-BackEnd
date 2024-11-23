@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.utente;
+/*package loicmangele.asclanotes.utente;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,4 +16,4 @@ public class CustomUtenteDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return utenteRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Utente " + username + " non trovato!"));
     }
-}
+}*/
