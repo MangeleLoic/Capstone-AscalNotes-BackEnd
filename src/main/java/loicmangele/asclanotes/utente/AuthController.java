@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.utente;
+/*package loicmangele.asclanotes.utente;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,4 +13,4 @@ public class AuthController {
     public String login(@RequestBody UtenteLoginDTO body) {
         return "token";
     }
-}
+}*/

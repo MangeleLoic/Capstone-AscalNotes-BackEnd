@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.utente;
+/*package loicmangele.asclanotes.utente;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,4 +10,4 @@ public class AuthService {
     public String checkCredentials(UtenteLoginDTO body){
 
     }
-}
+}*/

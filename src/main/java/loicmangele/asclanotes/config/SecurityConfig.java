@@ -1,4 +1,4 @@
-package loicmangele.asclanotes.config;
+/*package loicmangele.asclanotes.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-   /* @Bean
+    @Bean
     @Autowired
     private FilterChainExceptionHandler filterChainExceptionHandler;
 
@@ -35,10 +35,10 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
-    @Bean*/
+    @Bean
     public PasswordEncoder getBcrypt() {
         return new BCryptPasswordEncoder(12);
-    }
+    }*/
 /*
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -52,7 +52,7 @@ public class SecurityConfig {
         /*UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }*/
+    }
 
 
-}
+}*/
