@@ -23,8 +23,9 @@ public record UtenteDto (
         @NotNull(message = "la password è obbligatoria!")
         @Size( min=8, message = "la password deve avere almeno 8 caratteri!! ")
         @Pattern(
-        regexp = "^(?=.[A-Z])(?=.[a-z])(?=.\\d)(?=.[@$!%?&])[A-Za-z\\d@$!%?&]{8,}$",
-        message = "La password deve contenere almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale")
+                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+                message = "La password deve contenere almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale")
+
         String password,
 
         @NotNull(message = "il nome completo è obbligatorio!")

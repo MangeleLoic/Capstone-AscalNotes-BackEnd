@@ -31,9 +31,10 @@ public class UtenteService {
         Utente utente = new Utente();
         utente.setUsername(body.username());
         utente.setEmail(body.email());
-       // utente.setPassword(bcrypt.encode(body.password()));
+        utente.setPassword(body.password());
         utente.setFullname(body.fullname());
         utente.setProfileImage(body.profileImage());
+
 
         return this.utenteRepository.save(utente);
     }
