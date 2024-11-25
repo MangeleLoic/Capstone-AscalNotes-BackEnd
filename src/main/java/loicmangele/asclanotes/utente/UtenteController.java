@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.stream.Collectors;
 
@@ -59,6 +60,12 @@ public class UtenteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable Long utenteId) {
         this.utenteService.findByIdAndDelete(utenteId);
+    }
+
+    //  Upload Immagine
+    @PatchMapping("/{utenteId}/img")
+    public String uploadAvatar (@PathVariable long utenteId, @RequestParam("img") MultipartFile file) {
+        return this.utenteService.uploadImg(file, utenteId);
     }
 
     @GetMapping("/me")

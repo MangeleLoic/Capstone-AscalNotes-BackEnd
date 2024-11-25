@@ -1,5 +1,7 @@
 package loicmangele.asclanotes.utente;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import loicmangele.asclanotes.exceptions.BadRequestException;
 import loicmangele.asclanotes.exceptions.UtenteNotFindByUsernameException;
 import loicmangele.asclanotes.exceptions.UtenteNotFoundByEmailException;
@@ -11,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -21,6 +25,9 @@ public class UtenteService {
 
     @Autowired
     private PasswordEncoder bcrypt;
+
+    @Autowired
+    private Cloudinary cloudinaryUploader;
 
     public Utente saveUtente(UtenteDto body){
         this.utenteRepository.findByUsername(body.username()).ifPresent(existingUtente -> {
@@ -79,5 +86,20 @@ public class UtenteService {
         return this.utenteRepository.findByUsername(username).orElseThrow(() -> new UtenteNotFindByUsernameException(username));
     }
 
+    public String uploadImg(MultipartFile file, long id) {
+
+        String url = null;
+        try {
+            url = (String) cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        } catch (IOException e) {
+            throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
+        }
+        Utente utente = utenteRepository.findById(id).orElseThrow(() -> new UtenteNotFoundException(id));
+        utente.setProfileImage(url);
+        this.utenteRepository.save(utente);
+
+        return url;
+
+    }
 
 }
