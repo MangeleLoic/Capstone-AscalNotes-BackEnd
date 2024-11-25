@@ -20,4 +20,9 @@ public class Allegato {
     @JoinColumn(name = "appunto_id")
     private Appunto appunto;
     private String path;
+
+    public Allegato(Appunto appunto, String path) {
+        this.appunto = appunto;
+        this.path = path;
+    }
 }

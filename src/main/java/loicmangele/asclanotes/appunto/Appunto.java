@@ -37,4 +37,14 @@ public class Appunto {
 
     @OneToMany(mappedBy = "appunto")
     private List<Allegato> allegati;
+
+    public Appunto(String titolo, String contenuto, LocalDateTime dataCreazione, LocalDateTime dataUltimaModifica, Utente utente, Corso corso, List<Allegato> allegati) {
+        this.titolo = titolo;
+        this.contenuto = contenuto;
+        this.dataCreazione = dataCreazione;
+        this.dataUltimaModifica = dataUltimaModifica;
+        this.utente = utente;
+        this.corso = corso;
+        this.allegati = allegati;
+    }
 }
