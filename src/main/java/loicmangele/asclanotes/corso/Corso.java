@@ -22,4 +22,11 @@ public class Corso {
     private String descrizione;
     @Column
     private String facolta;
+
+    public Corso(String nome, String codice, String descrizione, String facolta) {
+        this.nome = nome;
+        this.codice = codice;
+        this.descrizione = descrizione;
+        this.facolta = facolta;
+    }
 }

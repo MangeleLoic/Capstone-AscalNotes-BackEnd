@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,9 @@ import java.util.Optional;
 public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
+
+    @Autowired
+    private PasswordEncoder bcrypt;
 
     public Utente saveUtente(UtenteDto body){
         this.utenteRepository.findByUsername(body.username()).ifPresent(existingUtente -> {
@@ -31,7 +35,7 @@ public class UtenteService {
         Utente utente = new Utente();
         utente.setUsername(body.username());
         utente.setEmail(body.email());
-        utente.setPassword(body.password());
+        utente.setPassword(bcrypt.encode(body.password()));
         utente.setFullname(body.fullname());
         utente.setProfileImage(body.profileImage());
         utente.setRole(Role.STUDENT);
