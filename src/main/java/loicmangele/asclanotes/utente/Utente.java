@@ -2,6 +2,13 @@ package loicmangele.asclanotes.utente;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
+
 
 @Entity
 @Table(name = "utente")
@@ -9,7 +16,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Utente {
+public class Utente implements UserDetails {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
@@ -28,7 +35,7 @@ public class Utente {
     @Column(nullable = false)
     private Role role;
 
-    public Utente(String username, String fullname, String password, String email, String profileImage, Role role) {
+    public Utente(String username, String fullname, String password, String email, String profileImage) {
         this.username = username;
         this.fullname = fullname;
         this.password = password;
@@ -36,4 +43,12 @@ public class Utente {
         this.profileImage = profileImage;
         this.role = Role.STUDENT;
     }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
+
+
 }

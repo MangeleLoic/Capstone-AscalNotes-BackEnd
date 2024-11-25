@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,12 @@ public class UtenteController {
 
     //  GET http://localhost:3001/utenti
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Page<Utente> findAll(@RequestParam(defaultValue = "1") int page,
                               @RequestParam(defaultValue = "10") int size,
                               @RequestParam(defaultValue = "id") String sortBy) {
         return this.utenteService.findAllUtenti( page, size, sortBy);
     }
-
-
 
     //  GET http://localhost:3001/utenti/{utentiId}
     @GetMapping("/{utenteId}")
@@ -38,6 +39,7 @@ public class UtenteController {
 
     //  PUT http://localhost:3001/utenti/{utenteId} (+ req.body)
     @PutMapping("/{utenteId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Utente findByIdAndUpdate(@PathVariable Long utenteId,
                                   @RequestBody @Validated UtenteDto body,
                                   BindingResult validationResult) {
@@ -53,8 +55,27 @@ public class UtenteController {
 
     //  DELETE http://localhost:3001/utenti/{utenteId} --> 204
     @DeleteMapping("/{utenteId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable Long utenteId) {
         this.utenteService.findByIdAndDelete(utenteId);
     }
+
+    @GetMapping("/me")
+    public Utente getProfile(@AuthenticationPrincipal Utente currentAuthenticatedUser) {
+        return currentAuthenticatedUser;
+    }
+
+    @PutMapping("/me")
+    public Utente updateProfile(@AuthenticationPrincipal Utente currentAuthenticatedUser, @RequestBody @Validated UtenteDto body) {
+        return this.utenteService.updateUtente(currentAuthenticatedUser.getId(), body);
+    }
+
+    @DeleteMapping("/me")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProfile(@AuthenticationPrincipal Utente currentAuthenticatedUser) {
+        this.utenteService.findByIdAndDelete(currentAuthenticatedUser.getId());
+    }
+
+
 }

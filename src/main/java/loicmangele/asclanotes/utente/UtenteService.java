@@ -34,6 +34,7 @@ public class UtenteService {
         utente.setPassword(body.password());
         utente.setFullname(body.fullname());
         utente.setProfileImage(body.profileImage());
+        utente.setRole(Role.STUDENT);
 
 
         return this.utenteRepository.save(utente);
@@ -41,7 +42,7 @@ public class UtenteService {
 
     public Page<Utente> findAllUtenti(int page, int size, String sortBy) {
         if (size > 50) size = 50;
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(page -1, size, Sort.by(sortBy));
         return utenteRepository.findAll(pageable);
     }
 
@@ -73,4 +74,6 @@ public class UtenteService {
     public Utente findByUsername(String username) {
         return this.utenteRepository.findByUsername(username).orElseThrow(() -> new UtenteNotFindByUsernameException(username));
     }
+
+
 }
