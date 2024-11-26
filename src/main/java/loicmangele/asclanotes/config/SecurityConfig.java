@@ -29,7 +29,10 @@ public class SecurityConfig {
         httpSecurity.sessionManagement(httpSecuritySessionManagementConfigurer ->
                 httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-                authorizationManagerRequestMatcherRegistry.requestMatchers("/**").permitAll());
+                authorizationManagerRequestMatcherRegistry
+                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/appunti/**").authenticated()
+        );
         httpSecurity.cors(Customizer.withDefaults());
         return httpSecurity.build();
     }

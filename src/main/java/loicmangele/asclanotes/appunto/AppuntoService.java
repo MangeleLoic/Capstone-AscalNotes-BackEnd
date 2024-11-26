@@ -3,12 +3,15 @@ package loicmangele.asclanotes.appunto;
 
 import loicmangele.asclanotes.corso.CorsoRepository;
 import loicmangele.asclanotes.exceptions.*;
+import loicmangele.asclanotes.utente.Utente;
 import loicmangele.asclanotes.utente.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,7 +26,7 @@ public class AppuntoService {
     @Autowired
     private CorsoRepository corsoRepository;
 
-    public Appunto saveAppunto(AppuntoDTO body){
+    public Appunto saveAppunto(AppuntoDTO body, Utente utenteLoggato){
         this.appuntoRepository.findByTitolo(body.titolo()).ifPresent(existingAppunto -> {
             throw new BadRequestException("L'appunto con titolo " + body.titolo() + " è già presente");
         });
@@ -33,7 +36,7 @@ public class AppuntoService {
         appunto.setContenuto(body.contenuto());
         appunto.setDataCreazione(LocalDateTime.now());
         appunto.setDataUltimaModifica(LocalDateTime.now());//??RAGIONACI CON CALMA!!
-        appunto.setUtente(utenteRepository.findById(body.utenteId()).orElseThrow(()-> new UtenteNotFoundException(body.utenteId())));
+        appunto.setUtente(utenteLoggato);
         appunto.setCorso(corsoRepository.findById(body.corsoId()).orElseThrow(()-> new CorsoNotFoundException(body.corsoId())));
         return appuntoRepository.save(appunto);
     }
@@ -48,8 +51,14 @@ public class AppuntoService {
         return this.appuntoRepository.findById(id);
     }
 
-    public Appunto updateAppunto(long id, AppuntoDTO body) {
+    public Appunto updateAppunto(long id, AppuntoDTO body, Utente utenteLoggato) {
         return appuntoRepository.findById(id).map(appunto -> {
+            if (!appunto.getUtente().getId().equals(utenteLoggato.getId())) {
+                throw new UnauthorizedException("Non puoi modificare un appunto che non hai creato.");
+            }
+            if (!appunto.getTitolo().equals(body.titolo()) && appuntoRepository.findByTitolo(body.titolo()).isPresent()) {
+                throw new BadRequestException("Un altro appunto con il titolo " + body.titolo() + " esiste già.");
+            }
             appunto.setTitolo(body.titolo());
             appunto.setContenuto(body.contenuto());
             appunto.setDataUltimaModifica(LocalDateTime.now());
