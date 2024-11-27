@@ -1,6 +1,8 @@
 package loicmangele.asclanotes.appunto;
 
 
+import loicmangele.asclanotes.allegato.Allegato;
+import loicmangele.asclanotes.allegato.AllegatoRepository;
 import loicmangele.asclanotes.corso.CorsoRepository;
 import loicmangele.asclanotes.exceptions.*;
 import loicmangele.asclanotes.utente.Utente;
@@ -10,11 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,8 @@ public class AppuntoService {
     private UtenteRepository utenteRepository;
     @Autowired
     private CorsoRepository corsoRepository;
+    @Autowired
+    private AllegatoRepository allegatoRepository;
 
     public Appunto saveAppunto(AppuntoDTO body, Utente utenteLoggato){
         this.appuntoRepository.findByTitolo(body.titolo()).ifPresent(existingAppunto -> {
@@ -62,18 +65,24 @@ public class AppuntoService {
             appunto.setTitolo(body.titolo());
             appunto.setContenuto(body.contenuto());
             appunto.setDataUltimaModifica(LocalDateTime.now());
-            appunto.setUtente(utenteRepository.findById(body.utenteId()).orElseThrow(()-> new UtenteNotFoundException(body.utenteId())));
             appunto.setCorso(corsoRepository.findById(body.corsoId()).orElseThrow(()-> new CorsoNotFoundException(body.corsoId())));
 
             return appuntoRepository.save(appunto);
         }).orElseThrow(() -> new AppuntoNotFoundException(id));
     }
 
-    public void findByIdAndDelete(long id) {
+    public void findByIdAndDelete(long id, Utente utenteLoggato) {
         Appunto appunto = appuntoRepository.findById(id)
                 .orElseThrow(() -> new AppuntoNotFoundException(id));
+        if (!appunto.getUtente().getId().equals(utenteLoggato.getId())) {
+            throw new UnauthorizedException("Non puoi eliminare un appunto che non hai creato.");
+        }
+        List<Allegato> allegati = allegatoRepository.findByAppuntoId(id);
+        allegatoRepository.deleteAll(allegati);
+
         appuntoRepository.delete(appunto);
     }
+
 
     public Appunto findByTitolo(String titolo) {
         return this.appuntoRepository.findByTitolo(titolo).orElseThrow(()-> new AppuntoNotFoundByTitoloException(titolo));
