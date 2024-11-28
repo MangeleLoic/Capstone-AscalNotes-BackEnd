@@ -45,11 +45,11 @@ public class AppuntoController {
                 .orElseThrow(() -> new AppuntoNotFoundException(appuntiId));
     }
 
-    //  GET http://localhost:3001/Titolo/{appuntiTitle}
-    /*@GetMapping("/{appuntiTitle}")
+    //  GET http://localhost:3001/titolo/{appuntiTitle}
+    @GetMapping("/titolo/{appuntiTitle}")
     public Appunto findByTitolo(@PathVariable String appuntiTitle) {
         return this.appuntoService.findByTitolo(appuntiTitle);
-    }*/
+    }
 
 
     //  PUT http://localhost:3001/appunti/{appuntoId} (+ req.body)

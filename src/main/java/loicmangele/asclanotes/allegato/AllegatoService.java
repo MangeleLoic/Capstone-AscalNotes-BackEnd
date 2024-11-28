@@ -23,31 +23,7 @@ public class AllegatoService {
     @Autowired
     private Cloudinary cloudinaryUploader;
 
-   /* public Allegato save(AllegatoDTO body){
-        this.allegatoRepository.findById(body.id()).ifPresent(existingAllegato -> {
-            throw new BadRequestException("Il percorso " + body.path() + " è già presente");
-        });
-        Allegato allegato = new Allegato();
-        allegato.setPath(body.path());
-        allegato.setAppunto(appuntoRepository.findById(body.appuntoId()).orElseThrow(()->new AppuntoNotFoundException(body.appuntoId())));
-        return allegatoRepository.save(allegato);
-    }*/
 
-   /* public String uploadFile(MultipartFile file, long id) {
-
-        String url = null;
-        try {
-            url = (String) cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
-        } catch (IOException e) {
-            throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
-        }
-        Allegato allegato = allegatoRepository.findById(id).orElseThrow(() -> new AllegatoNotFoundException(id));
-        allegato.setPath(url);
-        this.allegatoRepository.save(allegato);
-
-        return url;
-
-    }*/
 
     public Allegato uploadAllegato(MultipartFile file, Long appuntoId) {
         String url;
