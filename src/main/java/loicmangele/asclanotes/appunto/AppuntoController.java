@@ -3,6 +3,7 @@ package loicmangele.asclanotes.appunto;
 import jakarta.validation.Valid;
 import loicmangele.asclanotes.exceptions.AppuntoNotFoundException;
 import loicmangele.asclanotes.exceptions.BadRequestException;
+import loicmangele.asclanotes.exceptions.UnauthorizedException;
 import loicmangele.asclanotes.utente.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -34,7 +35,7 @@ public class AppuntoController {
     public Page<Appunto> findAllAppunti(@RequestParam(defaultValue = "1") int page,
                                 @RequestParam(defaultValue = "10") int size,
                                 @RequestParam(defaultValue = "id") String sortBy) {
-        return this.appuntoService.findAllAppunti( page, size, sortBy);
+        return this.appuntoService.findAllAppunti( page -1, size, sortBy);
     }
 
     //  GET http://localhost:3001/appunti/{appuntiId}
@@ -42,6 +43,12 @@ public class AppuntoController {
     public Appunto findById(@PathVariable Long appuntiId) {
         return this.appuntoService.findById(appuntiId)
                 .orElseThrow(() -> new AppuntoNotFoundException(appuntiId));
+    }
+
+    //  GET http://localhost:3001/titolo/{appuntiTitle}
+    @GetMapping("/titolo/{appuntiTitle}")
+    public Appunto findByTitolo(@PathVariable String appuntiTitle) {
+        return this.appuntoService.findByTitolo(appuntiTitle);
     }
 
 
@@ -61,11 +68,14 @@ public class AppuntoController {
         return this.appuntoService.updateAppunto(appuntoId, body, utenteLoggato);
     }
 
-    //  DELETE http://localhost:3001/utenti/{utenteId} --> 204
+    //  DELETE http://localhost:3001/appunti/{appuntoId} --> 204
     @DeleteMapping("/{appuntoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findByIdAndDelete(@PathVariable Long appuntoId) {
-        this.appuntoService.findByIdAndDelete(appuntoId);
+    public void findByIdAndDelete(@PathVariable Long appuntoId,
+                                  @AuthenticationPrincipal Utente utenteLoggato) {
+        this.appuntoService.findByIdAndDelete(appuntoId, utenteLoggato);
     }
 
 }
+
+

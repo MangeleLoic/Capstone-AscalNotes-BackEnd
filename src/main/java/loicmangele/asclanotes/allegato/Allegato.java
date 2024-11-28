@@ -1,5 +1,6 @@
 package loicmangele.asclanotes.allegato;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import loicmangele.asclanotes.appunto.Appunto;
 import lombok.*;
@@ -18,6 +19,7 @@ public class Allegato {
 
     @ManyToOne
     @JoinColumn(name = "appunto_id")
+    @JsonIgnore
     private Appunto appunto;
     private String path;
 

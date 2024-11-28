@@ -31,7 +31,7 @@ public class Appunto {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "utente_id")
     private Utente utente;
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "corso_id")
     private Corso corso;
 
