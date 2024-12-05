@@ -2,6 +2,7 @@ package loicmangele.asclanotes.utente;
 
 import loicmangele.asclanotes.exceptions.BadRequestException;
 import loicmangele.asclanotes.exceptions.UtenteNotFoundException;
+import loicmangele.asclanotes.tools.JWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,6 +24,9 @@ public class UtenteController {
 
     @Autowired
     private UtenteService utenteService;
+
+    @Autowired
+    private JWT jwt;
 
     //  GET http://localhost:3001/utenti
     @GetMapping
@@ -62,7 +68,7 @@ public class UtenteController {
         this.utenteService.findByIdAndDelete(utenteId);
     }
 
-    //  Upload Immagine
+
     @PatchMapping("/{utenteId}/img")
     public String uploadAvatar (@PathVariable long utenteId, @RequestParam("img") MultipartFile file) {
         return this.utenteService.uploadImg(file, utenteId);
@@ -74,9 +80,20 @@ public class UtenteController {
     }
 
     @PutMapping("/me")
-    public Utente updateProfile(@AuthenticationPrincipal Utente currentAuthenticatedUser, @RequestBody @Validated UtenteDto body) {
-        return this.utenteService.updateUtente(currentAuthenticatedUser.getId(), body);
+    public Map<String, String> updateProfile(
+            @AuthenticationPrincipal Utente currentAuthenticatedUser,
+            @RequestBody @Validated UtenteDto body
+    ) {
+        Utente updatedUtente = utenteService.updateUtente(currentAuthenticatedUser.getId(), body);
+
+        String newToken = jwt.createToken(updatedUtente);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("accessToken", newToken);
+        return response;
     }
+
+
 
     @DeleteMapping("/me")
     @ResponseStatus(HttpStatus.NO_CONTENT)
