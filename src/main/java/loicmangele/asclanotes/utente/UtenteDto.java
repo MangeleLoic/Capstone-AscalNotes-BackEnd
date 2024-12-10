@@ -20,7 +20,7 @@ public record UtenteDto (
         message = "L'email deve contenere '@' e '.' in formato valido (esempio: esempio@dominio.com)")
          String email,
 
-        @NotNull(message = "la password è obbligatoria!")
+       // @NotNull(message = "la password è obbligatoria!")
         @Size( min=8, message = "la password deve avere almeno 8 caratteri!! ")
         @Pattern(
                 regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",

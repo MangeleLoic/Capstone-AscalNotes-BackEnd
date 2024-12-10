@@ -18,8 +18,8 @@ public class AllegatoController {
 
     @PostMapping("/upload")
     public Allegato uploadAllegato(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("appuntoId") Long appuntoId,
-                                   @AuthenticationPrincipal Utente utenteLoggato) {
+                                   @RequestParam("appuntoId") Long appuntoId
+                                  ) {
         return allegatoService.uploadAllegato(file, appuntoId);
     }
 

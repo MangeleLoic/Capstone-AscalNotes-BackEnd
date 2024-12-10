@@ -3,7 +3,6 @@ package loicmangele.asclanotes.appunto;
 import jakarta.validation.Valid;
 import loicmangele.asclanotes.exceptions.AppuntoNotFoundException;
 import loicmangele.asclanotes.exceptions.BadRequestException;
-import loicmangele.asclanotes.exceptions.UnauthorizedException;
 import loicmangele.asclanotes.utente.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -32,10 +31,10 @@ public class AppuntoController {
 
     //  GET http://localhost:3001/appunti
     @GetMapping
-    public Page<Appunto> findAllAppunti(@RequestParam(defaultValue = "1") int page,
+    public Page<Appunto> findAllAppunti(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "10") int size,
                                 @RequestParam(defaultValue = "id") String sortBy) {
-        return this.appuntoService.findAllAppunti( page -1, size, sortBy);
+        return this.appuntoService.findAllAppunti( page , size, sortBy);
     }
 
     //  GET http://localhost:3001/appunti/{appuntiId}

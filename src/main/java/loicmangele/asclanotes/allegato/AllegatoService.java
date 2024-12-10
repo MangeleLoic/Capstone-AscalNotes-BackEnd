@@ -26,19 +26,19 @@ public class AllegatoService {
 
 
     public Allegato uploadAllegato(MultipartFile file, Long appuntoId) {
-        String url;
+        String path = null;
         try {
-            url = (String) cloudinaryUploader.uploader().upload(
+            path = (String) cloudinaryUploader.uploader().upload(
                     file.getBytes(),
                     ObjectUtils.asMap("folder", "attachments")
-            ).get("url");
+            ).get("path");
         } catch (IOException e) {
             throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
         }
 
         Appunto appunto = appuntoRepository.findById(appuntoId)
                 .orElseThrow(() -> new AppuntoNotFoundException(appuntoId));
-        Allegato allegato = new Allegato(appunto, url);
+        Allegato allegato = new Allegato(appunto, path);
 
         return allegatoRepository.save(allegato);
     }
