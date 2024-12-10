@@ -2,6 +2,7 @@ package loicmangele.asclanotes.utente;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import jakarta.transaction.Transactional;
 import loicmangele.asclanotes.exceptions.BadRequestException;
 import loicmangele.asclanotes.exceptions.UtenteNotFindByUsernameException;
 import loicmangele.asclanotes.exceptions.UtenteNotFoundByEmailException;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
@@ -63,11 +65,14 @@ public class UtenteService {
 
     public Utente updateUtente(long id, UtenteDto body) {
         return utenteRepository.findById(id).map(utente -> {
-            utente.setUsername(body.username());
-            utente.setEmail(body.email());
-            utente.setPassword(body.password());
-            utente.setFullname(body.fullname());
-            utente.setProfileImage(body.profileImage());
+            if (body.username() != null) utente.setUsername(body.username());
+            if (body.email() != null) utente.setEmail(body.email());
+            if (body.password() != null && !body.password().isBlank()) {
+                utente.setPassword(bcrypt.encode(body.password()));
+            }
+            if (body.fullname() != null) utente.setFullname(body.fullname());
+            if (body.profileImage() != null) utente.setProfileImage(body.profileImage());
+
             return utenteRepository.save(utente);
         }).orElseThrow(() -> new UtenteNotFoundException(id));
     }
