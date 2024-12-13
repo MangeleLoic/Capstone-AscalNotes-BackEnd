@@ -46,6 +46,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.cloudinary</groupId>
 			<artifactId>cloudinary-http44</artifactId>
@@ -67,12 +68,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
-		<dependency>
-			<groupId>com.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>5.9</version>
 		</dependency>
 
 		<dependency>
@@ -127,9 +122,12 @@
 			<artifactId>junit-jupiter</artifactId>
 			<version>5.11.3</version>
 			<scope>test</scope>
+
+
 		</dependency>
 
 	</dependencies>
+
 
 	<build>
 		<plugins>
