@@ -26,12 +26,12 @@ public class AllegatoService {
 
 
     public Allegato uploadAllegato(MultipartFile file, Long appuntoId) {
-        String path = null;
+        String path ;
         try {
             path = (String) cloudinaryUploader.uploader().upload(
                     file.getBytes(),
                     ObjectUtils.asMap("folder", "attachments")
-            ).get("path");
+            ).get("url");
         } catch (IOException e) {
             throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
         }

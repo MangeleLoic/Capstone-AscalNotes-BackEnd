@@ -65,7 +65,7 @@ public class AppuntoService {
             appunto.setTitolo(body.titolo());
             appunto.setContenuto(body.contenuto());
             appunto.setDataUltimaModifica(LocalDateTime.now());
-            appunto.setCorso(corsoRepository.findById(body.corsoId()).orElseThrow(()-> new CorsoNotFoundException(body.corsoId())));
+            //appunto.setCorso(corsoRepository.findById(body.corsoId()).orElseThrow(()-> new CorsoNotFoundException(body.corsoId())));
 
             return appuntoRepository.save(appunto);
         }).orElseThrow(() -> new AppuntoNotFoundException(id));

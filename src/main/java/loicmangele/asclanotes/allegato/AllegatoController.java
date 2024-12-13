@@ -3,6 +3,7 @@ package loicmangele.asclanotes.allegato;
 import loicmangele.asclanotes.utente.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,14 +17,14 @@ public class AllegatoController {
     @Autowired
     private AllegatoService allegatoService;
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Allegato uploadAllegato(@RequestParam("file") MultipartFile file,
                                    @RequestParam("appuntoId") Long appuntoId
                                   ) {
         return allegatoService.uploadAllegato(file, appuntoId);
     }
 
-    @GetMapping("/{appuntoId}")
+    @GetMapping("/{appuntoId}/all")
     public List<Allegato> findAllAllegati(@PathVariable Long appuntoId) {
         return allegatoService.findAllAllegati(appuntoId);
     }
